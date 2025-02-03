@@ -1,22 +1,20 @@
-"Your Name":
+"Zhining Zhang":
   bold: true
 
-"Robert White":
-  url: https://www.google.com/?q=Robert+White
+"Wentao Zhu":
+  url: https://wentao.live/about.html
 
-"Charles Green (MIT)":
-  name: Charles Green
-  url: https://www.google.com/?q=Charles+Green+MIT
+"Yizhou Wang":
+  url: https://cfcs.pku.edu.cn/english/people/faculty/yizhouwang/index.htm
 
-"Charles Green (Stanford)":
-  name: Charles Green
-  url: https://www.google.com/?q=Charles+Green+Stanford
+"Mung Yao Jia":
+  # url: https://www.google.com/?q=Charles+Green+Stanford
 
-"Garrett Harris":
-  url: https://www.google.com/?q=Garrett+Harris
+"Chuanyang Jin":
+  url: https://chuanyangjin.com/
 
-"James Wang":
-  url: https://www.google.com/?q=James+Wang
+"Tianmin Shu":
+  url: https://www.tshu.io/
 
 "John Doe":
   url: https://www.google.com/?q=John+Doe
