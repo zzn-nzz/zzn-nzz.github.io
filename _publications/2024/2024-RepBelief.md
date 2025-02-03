@@ -6,7 +6,7 @@ pub:            "International Conference on Machine Learning (ICML)"
 # pub_pre:        "Submitted to "
 # pub_post:       'Under review.'
 # pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Spotlight</span>'
-pub_date:       "2024"
+pub_date:       ", 2024"
 
 abstract: >-
   We investigate belief representations in LMs: we discover that the belief status of characters in a story is linearly decodable from LM activations. We further propose a way to manipulate LMs through the activations to enhance their Theory of Mind performance.
