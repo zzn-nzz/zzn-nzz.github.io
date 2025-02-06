@@ -4,9 +4,9 @@ date:           2025-02-03 00:01:00 +0800
 selected:       true
 # pub:            "International Conference on Machine Learning (ICML)"
 # pub_pre:        "Submitted to "
-pub_post:       'Under review,'
+pub_post:       ''
 # pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Spotlight</span>'
-pub_date:       "2025. Arxiv and code coming soon."
+pub_date:       "Arxiv and code coming soon."
 
 abstract: >-
   We introduce AutoToM, an automated Bayesian Theory of Mind method for achieving open-ended machine ToM. Leveraging an LLM as the backend, AutoToM combines the robustness of Bayesian models and the open-endedness of Language models, offering a scalable and interpretable approach to machine ToM.
