@@ -6,7 +6,7 @@ selected:       true
 # pub_pre:        "Submitted to "
 pub_post:       ''
 # pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Spotlight</span>'
-pub_date:       "Arxiv and code coming soon."
+pub_date:       "2025"
 
 abstract: >-
   We introduce AutoToM, an automated Bayesian Theory of Mind method for achieving open-ended machine ToM. Leveraging an LLM as the backend, AutoToM combines the robustness of Bayesian models and the open-endedness of Language models, offering a scalable and interpretable approach to machine ToM.
@@ -18,6 +18,7 @@ authors:
   - Mung Yao Jia*
   - Tianmin Shu
 links:
-#   Code: https://github.com/Walter0807/RepBelief
-#   Project Page: https://walter0807.github.io/RepBelief/
+   Arxiv: https://arxiv.org/abs/2502.15676
+   Code: https://github.com/SCAI-JHU/AutoToM
+   Project Page: https://chuanyangjin.com/AutoToM/
 ---
