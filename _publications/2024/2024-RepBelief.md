@@ -17,6 +17,7 @@ authors:
   - Zhining Zhang
   - Yizhou Wang
 links:
+  Arxiv: https://arxiv.org/pdf/2402.18496
   Code: https://github.com/Walter0807/RepBelief
   Project Page: https://walter0807.github.io/RepBelief/
 ---
