@@ -2,7 +2,7 @@
 title:          "AutoToM: Automated Bayesian Inverse Planning and Model Discovery for Open-ended Theory of Mind"
 date:           2025-02-03 00:01:00 +0800
 selected:       true
-# pub:            "International Conference on Machine Learning (ICML)"
+pub:            "Spotlight, Annual Conference on Neural Information Processing Systems (Neurips) 2025"
 # pub_pre:        "Submitted to "
 pub_post:       ''
 # pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Spotlight</span>'
