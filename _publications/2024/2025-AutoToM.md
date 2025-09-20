@@ -2,7 +2,7 @@
 title:          "AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling"
 date:           2025-05-20 00:01:00 +0800
 selected:       true
-pub:            "Spotlight, Annual Conference on Neural Information Processing Systems (Neurips), 2025"
+pub:            "Spotlight, Annual Conference on Neural Information Processing Systems (NeurIPS), 2025"
 # pub_pre:        "Submitted to "
 pub_post:       ''
 # pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Spotlight</span>'
