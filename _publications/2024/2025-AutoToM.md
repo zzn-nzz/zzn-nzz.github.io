@@ -19,7 +19,7 @@ authors:
   - Shunchi Zhang*
   - Tianmin Shu
 links:
-   Arxiv: https://arxiv.org/abs/2502.15676
+   Paper: https://openreview.net/pdf?id=oeZZusZheP
    Code: https://github.com/SCAI-JHU/AutoToM
    Project Page: https://chuanyangjin.com/AutoToM/
 ---
