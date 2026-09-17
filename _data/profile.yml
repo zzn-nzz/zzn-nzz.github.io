@@ -34,6 +34,7 @@ portrait_url: /assets/images/photos/portrait.jpg
 education:
 - name: UC Berkeley
   logo: /assets/images/badges/uc_berkeley.svg
+  logo_size: 130px
   position: Ph.D. in Electrical Engineering and Computer Sciences
   date: Sep. 2026 - Present
 - name: Peking University
