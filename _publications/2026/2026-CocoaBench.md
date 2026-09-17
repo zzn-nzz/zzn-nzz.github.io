@@ -7,11 +7,13 @@ pub_post:       ''
 
 abstract: >-
   CocoaBench evaluates unified digital agents on human-designed, long-horizon tasks that require flexible composition of vision, search, and coding, with instruction-only task specifications and automatic evaluation functions.
+cover:          /assets/images/covers/cocoabench.svg
+cover_size:     300px
 authors:
-  - Shibo Hao
-  - Zhining Zhang
-  - Zhiqi Liang
-  - Tianyang Liu
+  - Shibo Hao*
+  - Zhining Zhang*
+  - Zhiqi Liang*
+  - Tianyang Liu*
   - Yuheng Zha
   - Qiyue Gao
   - Jixuan Chen
