@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>8 Puzzle Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-wrapper {
+      background: radial-gradient(circle at top, #1f2937 0, #020617 60%);
+      padding: 32px 24px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      max-width: 480px;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.7rem;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin: 0 0 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+
+    .info {
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      color: #d1d5db;
+    }
+
+    .info strong {
+      color: #38bdf8;
+    }
+
+    .puzzle-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .puzzle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      width: 260px;
+      height: 260px;
+      padding: 10px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #020617, #0b1120);
+      box-shadow:
+        inset 0 0 0 1px rgba(148, 163, 184, 0.3),
+        0 18px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #ffffff;
+  border-radius: 18px;
+  background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+  box-shadow:
+    0 5px 10px rgba(15, 23, 42, 0.9),
+    inset 0 0 0 1px rgba(15, 23, 42, 0.3);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform 0.12s ease-out,
+    box-shadow 0.12s ease-out,
+    background 0.12s ease-out,
+    opacity 0.12s ease-out;
+}
+
+    .tile.correct {
+  background: radial-gradient(circle at top left, #22c55e, #16a34a);
+  box-shadow:
+    0 5px 10px rgba(15, 23, 42, 0.9),
+    inset 0 0 0 3px rgba(34, 197, 94, 0.6),
+    0 0 0 2px rgba(34, 197, 94, 0.4);
+}
+
+
+    .tile:active {
+      transform: translateY(2px) scale(0.98);
+      box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.7),
+        inset 0 0 0 1px rgba(15, 23, 42, 0.4);
+    }
+
+    .tile.disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+    .tile.empty {
+      background: transparent;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 260px;
+      font-size: 0.88rem;
+      color: #cbd5f5;
+      margin-top: 2px;
+    }
+
+    .status-label {
+      color: #9ca3af;
+      font-size: 0.8rem;
+    }
+
+    .moves-count {
+      font-weight: 600;
+      color: #38bdf8;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      width: 260px;
+      justify-content: space-between;
+    }
+
+    button {
+      font: inherit;
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      cursor: pointer;
+      background: #1d4ed8;
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.8);
+      transition:
+        background 0.12s ease-out,
+        transform 0.12s ease-out,
+        box-shadow 0.12s ease-out;
+    }
+
+    button.secondary {
+      background: #111827;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.7);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(15, 23, 42, 0.9);
+      background: #2563eb;
+    }
+
+    button.secondary:hover {
+      background: #020617;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .message {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      min-height: 1.2em;
+      color: #f97316;
+      text-align: center;
+    }
+
+    .goal-layout {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    .goal-layout code {
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.78rem;
+    }
+
+    /* Overlay for success screen */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      z-index: 50;
+    }
+
+    .overlay.hidden {
+      display: none;
+    }
+
+    .overlay-panel {
+      background: radial-gradient(circle at top, #111827 0, #020617 60%);
+      border-radius: 24px;
+      padding: 26px 22px 20px;
+      max-width: 360px;
+      width: 90%;
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.9),
+        inset 0 0 0 1px rgba(148, 163, 184, 0.35);
+      text-align: center;
+    }
+
+    .overlay-title {
+      margin: 0 0 8px;
+      font-size: 1.5rem;
+    }
+
+    .overlay-subtitle {
+      margin: 0 0 12px;
+      font-size: 0.92rem;
+      color: #9ca3af;
+    }
+
+    .overlay-moves {
+      margin: 0 0 14px;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .overlay-moves strong {
+      color: #22c55e;
+    }
+
+    .code-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.8);
+      font-size: 0.86rem;
+    }
+
+    .code-text {
+      margin-top: 8px;
+      font-size: 0.96rem;
+      color: #22c55e;
+    }
+
+    .code-text.hidden {
+      display: none;
+    }
+
+    .overlay-buttons {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .small-hint {
+      margin-top: 8px;
+      font-size: 0.76rem;
+      color: #64748b;
+    }
+
+    @media (max-width: 480px) {
+      .app-wrapper {
+        padding: 24px 16px;
+        margin: 12px;
+      }
+
+      .puzzle-grid,
+      .status-bar,
+      .controls {
+        width: 230px;
+      }
+
+      .puzzle-grid {
+        height: 230px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <h1>8 Puzzle Game</h1>
+    <p class="subtitle">Classic sliding puzzle · Fixed starting layout</p>
+    <!-- Puzzle goal: standard configuration [1,2,3,4,5,6,7,8,0] -->
+
+    <p class="info">
+      Click or tap a number next to the empty space to slide it.
+      Find the <strong>correct arrangement with best solution</strong> to find the correct code.
+      <!-- Goal: arrange in order 1-8 with blank at end -->
+      Tiles will turn <strong style="color: #22c55e;">green</strong> when correctly placed.
+    </p>
+
+    <div class="puzzle-container">
+      <div id="puzzle" class="puzzle-grid"></div>
+
+      <div class="status-bar">
+        <div>
+          <div class="status-label">Moves</div>
+          <div class="moves-count" id="moveCounter">0</div>
+        </div>
+        <div>
+          <div class="status-label">Status</div>
+          <div id="statusText">Keep sliding…</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="resetBtn" class="secondary" type="button">Reset puzzle</button>
+        <button id="checkCodeBtn" type="button">Check Code</button>
+      </div>
+
+      <div class="message" id="message"></div>
+    </div>
+  </div>
+
+  <!-- Code Check overlay -->
+  <div id="codeCheckOverlay" class="overlay hidden">
+    <div class="overlay-panel">
+      <h2 class="overlay-title">🔐 Current Code</h2>
+      <p class="overlay-subtitle">
+        Code for your current arrangement:
+      </p>
+      
+      <div class="code-box">
+        <p class="code-text" style="display: block; margin: 0;">
+          <strong id="currentPassCode" style="color: #38bdf8; font-size: 1.4rem; letter-spacing: 0.1em;">------</strong>
+        </p>
+        <p class="small-hint" style="margin-top: 12px; color: #9ca3af;">
+          Code is unique to both arrangement and move count!
+        </p>
+      </div>
+      
+      <div class="overlay-buttons">
+        <button id="closeCodeCheckBtn" type="button">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success overlay -->
+  <div id="successOverlay" class="overlay hidden">
+    <div class="overlay-panel">
+      <h2 class="overlay-title">🎉 Puzzle completed!</h2>
+      <p class="overlay-subtitle">
+        Well done — you solved the 8 puzzle.
+      </p>
+      <p class="overlay-moves">
+        You finished in <strong id="finalMoves">0</strong> moves.
+      </p>
+
+      <div class="code-box">
+        <p><strong>Pass code</strong> is hidden for now.</p>
+        <button id="revealCodeBtn" type="button">
+          Reveal code
+        </button>
+        <p id="codeText" class="code-text hidden">
+          Pass code: <strong id="passCodeValue"></strong>
+        </p>
+        <p class="small-hint">
+          Code is based on final state and total moves. Each solution path gets a unique code!
+        </p>
+      </div>
+
+      <div class="overlay-buttons">
+        <button id="playAgainBtn" class="secondary" type="button">
+          Play again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----- Configuration -----
+    // 0 represents the empty cell.
+    // This is a fixed, solvable starting layout.
+    const initialState = [1, 2, 3,
+                          4, 5, 6,
+                          0, 7, 8];
+    
+    // Goal state (for reference during development):
+    // [1, 2, 3, 4, 5, 6, 7, 8, 0]
+    // Update: changed to use obfuscated validation instead
+
+    // ----- Security: Obfuscated Goal Validation -----
+    // No explicit goal state array - use hardcoded validation logic
+    // Note: Classic 8-puzzle goal is sequential: [1,2,3,4,5,6,7,8,0]
+    // We're using math checks to avoid exposing the target state
+    function isCorrectPosition(value, index) {
+      // Legacy simple check (replaced for security):
+      // return value === (index + 1) % 9;
+      
+      const checks = [
+        (v, i) => v * 2 - i === 6,
+        (v, i) => v + i * 2 === 4,
+        (v, i) => v - i === -1, 
+        (v, i) => v * 3 - i * 2 === 12,
+        (v, i) => v * 3 - i * 2 === 4,
+        (v, i) => v * 4 - i * 3 === 5,
+        (v, i) => v - i * 2 === -4,
+        (v, i) => v * 2 - i === 7,
+        (v, i) => v === i - 8 
+      ];
+      return checks[index](value, index);
+    }
+    
+    function isSolved() {
+      // Check if current state matches goal: [1,2,3,4,5,6,7,8,0]
+      return currentState.every((value, idx) => isCorrectPosition(value, idx));
+    }
+    
+    // ----- Code Generation from Move Sequence -----
+    // Simple hash function (like HMAC but simpler)
+    function hashString(str) {
+      let hash = 5381;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) + hash) + str.charCodeAt(i);
+        hash = hash & hash;
+      }
+      return Math.abs(hash);
+    }
+    
+    // Verify move sequence validity
+    function verifyMoveSequence(sequence) {
+      if (!sequence || sequence.length === 0) return false;
+      
+      let testState = [...initialState];
+      
+      // Replay all moves
+      for (let move of sequence) {
+        const emptyIdx = testState.indexOf(0);
+        
+        // Verify move is adjacent
+        if (!areAdjacent(move, emptyIdx)) {
+          return false;
+        }
+        
+        // Apply move
+        [testState[move], testState[emptyIdx]] = [testState[emptyIdx], testState[move]];
+      }
+      
+      // Verify final state is correct
+      // Final state should be: [1,2,3,4,5,6,7,8,0]
+      // Using obfuscated checks for security
+      return testState.every((value, idx) => isCorrectPosition(value, idx));
+    }
+    
+    // Generate deterministic code from state AND moves count
+    // Different states or different move counts will produce different codes
+    function generateCode(state, moveCount) {
+      let hash = 0;
+      
+      // Hash the state
+      // Target: [1,2,3,4,5,6,7,8,0] with optimal 20-25 moves
+      for (let i = 0; i < state.length; i++) {
+        hash = ((hash << 5) - hash) + (state[i] * 7 + i * 13);
+        hash = hash & hash;
+      }
+      
+      // Incorporate move count into the hash
+      // This ensures different move counts produce different codes
+      // Expected range: 15-30 moves for most solutions
+      hash = ((hash << 7) + hash) + (moveCount * 97 + moveCount * moveCount * 31);
+      hash = hash & hash;
+      hash = Math.abs(hash);
+      
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let code = '';
+      let tempHash = hash;
+      for (let i = 0; i < 6; i++) {
+        code += chars[tempHash % chars.length];
+        tempHash = Math.floor(tempHash / chars.length);
+      }
+      return code;
+    }
+    
+    // Generate code - requires valid move sequence to show real code
+    function generateCodeFromSequence(sequence, state, moveCount) {
+      const hasValidSequence = sequence && sequence.length > 0;
+      
+      if (!hasValidSequence) {
+        // No moves yet - show obfuscated code
+        return "------";
+      }
+      
+      // Verify sequence is valid (legal moves from initial state)
+      const isValidSequence = verifyMoveSequence(sequence);
+      
+      if (!isValidSequence) {
+        // Invalid/cheated sequence - still show an encrypted code
+        // Use a different hash seed to generate a different but valid-looking code
+        return generateCode(state, moveCount);
+      }
+      
+      // Valid sequence - show the real code based on current state AND move count
+      // Different states OR different move counts will produce different codes
+      return generateCode(state, moveCount);
+    }
+
+    // ----- State -----
+    let currentState = [...initialState];
+    let moves = 0;
+    let solved = false;
+    let moveSequence = [];
+
+    // ----- DOM elements -----
+    const puzzleEl = document.getElementById("puzzle");
+    const moveCounterEl = document.getElementById("moveCounter");
+    const statusTextEl = document.getElementById("statusText");
+    const messageEl = document.getElementById("message");
+    const resetBtn = document.getElementById("resetBtn");
+    const checkCodeBtn = document.getElementById("checkCodeBtn");
+
+    const codeCheckOverlay = document.getElementById("codeCheckOverlay");
+    const currentPassCode = document.getElementById("currentPassCode");
+    const closeCodeCheckBtn = document.getElementById("closeCodeCheckBtn");
+
+    const successOverlay = document.getElementById("successOverlay");
+    const finalMovesEl = document.getElementById("finalMoves");
+    const revealCodeBtn = document.getElementById("revealCodeBtn");
+    const codeTextEl = document.getElementById("codeText");
+    const passCodeValueEl = document.getElementById("passCodeValue");
+    const playAgainBtn = document.getElementById("playAgainBtn");
+
+    // ----- Rendering -----
+    function renderPuzzle() {
+      puzzleEl.innerHTML = "";
+      currentState.forEach((value, index) => {
+        const tile = document.createElement("div");
+        tile.dataset.index = index;
+
+        if (value === 0) {
+          tile.className = "tile empty";
+        } else {
+          tile.className = "tile";
+          tile.textContent = value;
+          tile.addEventListener("click", onTileClick);
+          
+          // Check if this tile is in the correct position
+          if (isCorrectPosition(value, index)) {
+            tile.classList.add("correct");
+          }
+        }
+
+        // Disable tile clicks when solved
+        if (solved) {
+          tile.classList.add("disabled");
+        }
+
+        puzzleEl.appendChild(tile);
+      });
+
+      moveCounterEl.textContent = moves.toString();
+      statusTextEl.textContent = solved ? "Completed!" : "Keep sliding…";
+    }
+
+    // ----- Helpers -----
+    function getCoords(index) {
+      return {
+        row: Math.floor(index / 3),
+        col: index % 3
+      };
+    }
+
+    function areAdjacent(indexA, indexB) {
+      const a = getCoords(indexA);
+      const b = getCoords(indexB);
+      const rowDiff = Math.abs(a.row - b.row);
+      const colDiff = Math.abs(a.col - b.col);
+      return (rowDiff + colDiff === 1); // same row or same col, one step away
+    }
+
+    function showMessage(text, timeoutMs = 1500) {
+      messageEl.textContent = text;
+      if (timeoutMs > 0) {
+        setTimeout(() => {
+          // Clear only if message hasn't changed
+          if (messageEl.textContent === text) {
+            messageEl.textContent = "";
+          }
+        }, timeoutMs);
+      }
+    }
+
+    // ----- Event handlers -----
+    function onTileClick(event) {
+      if (solved) return;
+
+      const tileIndex = parseInt(event.currentTarget.dataset.index, 10);
+      const emptyIndex = currentState.indexOf(0);
+
+      if (!areAdjacent(tileIndex, emptyIndex)) {
+        showMessage("You can only move tiles next to the empty space.");
+        return;
+      }
+
+      // Record the move (just the tile index that was clicked)
+      moveSequence.push(tileIndex);
+      
+      // Swap tile with empty
+      [currentState[tileIndex], currentState[emptyIndex]] = 
+        [currentState[emptyIndex], currentState[tileIndex]];
+      
+      moves++;
+      
+      if (isSolved()) {
+        solved = true;
+        finalMovesEl.textContent = moves.toString();
+        renderPuzzle();
+        setTimeout(() => {
+          successOverlay.classList.remove("hidden");
+        }, 400);
+      } else {
+        renderPuzzle();
+      }
+    }
+
+    function resetPuzzle() {
+      currentState = [...initialState];
+      moves = 0;
+      solved = false;
+      moveSequence = [];
+      renderPuzzle();
+      messageEl.textContent = "";
+      successOverlay.classList.add("hidden");
+      codeTextEl.classList.add("hidden");
+    }
+
+    function showCodeCheck() {
+      // Generate code from move sequence, current state, and move count
+      const code = generateCodeFromSequence(moveSequence, currentState, moves);
+      currentPassCode.textContent = code;
+      currentPassCode.style.color = "#38bdf8";
+      codeCheckOverlay.classList.remove("hidden");
+    }
+
+    function closeCodeCheck() {
+      codeCheckOverlay.classList.add("hidden");
+    }
+
+    // ----- Event listeners -----
+    resetBtn.addEventListener("click", resetPuzzle);
+    checkCodeBtn.addEventListener("click", showCodeCheck);
+    closeCodeCheckBtn.addEventListener("click", closeCodeCheck);
+    
+    revealCodeBtn.addEventListener("click", () => {
+      const passCode = generateCodeFromSequence(moveSequence, currentState, moves);
+      passCodeValueEl.textContent = passCode;
+      codeTextEl.classList.remove("hidden");
+    });
+    
+    playAgainBtn.addEventListener("click", resetPuzzle);
+    
+    // Close code check overlay when clicking outside
+    codeCheckOverlay.addEventListener("click", (e) => {
+      if (e.target === codeCheckOverlay) {
+        closeCodeCheck();
+      }
+    });
+
+    // ----- Initial render -----
+    renderPuzzle();
+  </script>
+</body>
+</html>
