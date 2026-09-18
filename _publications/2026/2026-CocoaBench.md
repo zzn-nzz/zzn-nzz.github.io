@@ -7,7 +7,7 @@ pub_post:       ''
 
 abstract: >-
   CocoaBench evaluates unified digital agents on human-designed, long-horizon tasks that require flexible composition of vision, search, and coding, with instruction-only task specifications and automatic evaluation functions.
-cover:          /assets/images/covers/cocoabench.svg
+cover:          /assets/images/covers/cocoabench.png
 cover_size:     300px
 authors:
   - Shibo Hao*
@@ -43,5 +43,6 @@ authors:
   - Zhiting Hu
 links:
   Arxiv: https://arxiv.org/abs/2604.11201
+  Code: https://github.com/cocoabench/cocoa-agent
   Project Page: https://cocoabench.github.io/
 ---
