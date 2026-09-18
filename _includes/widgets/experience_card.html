@@ -11,7 +11,7 @@
                                 {% for item in site.data.profile.education %}
                                 <li class="media mb-1">
                                     {% if item.logo %}
-                                    <img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: {% if item.logo_size %}{{ item.logo_size }}{% else %}48px{% endif %}; margin-left: {% if item.logo_margin_left %}{{ item.logo_margin_left }}{% else %}0{% endif %};" class="mr-1 mt-1">
+                                    <img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: {% if item.logo_size %}{{ item.logo_size }}{% else %}48px{% endif %}; margin-left: {% if item.logo_margin_left %}{{ item.logo_margin_left }}{% else %}0{% endif %}; margin-top: {% if item.logo_margin_top %}{{ item.logo_margin_top }}{% else %}0.25rem{% endif %};" class="mr-1">
                                     {% endif %}
                                     <div class="media-body" style="margin-left: {% if item.text_margin_left %}{{ item.text_margin_left }}{% else %}0{% endif %};">
                                         <div>{{ item.name }}</div>
@@ -36,7 +36,7 @@
                                 {% for item in site.data.profile.experience %}
                                 <li class="media mb-1">
                                     {% if item.logo %}
-                                    <img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: {% if item.logo_size %}{{ item.logo_size }}{% else %}48px{% endif %}; margin-left: {% if item.logo_margin_left %}{{ item.logo_margin_left }}{% else %}0{% endif %};" class="mr-1 mt-1">
+                                    <img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: {% if item.logo_size %}{{ item.logo_size }}{% else %}48px{% endif %}; margin-left: {% if item.logo_margin_left %}{{ item.logo_margin_left }}{% else %}0{% endif %}; margin-top: {% if item.logo_margin_top %}{{ item.logo_margin_top }}{% else %}0.25rem{% endif %};" class="mr-1">
                                     {% endif %}
                                     <div class="media-body" style="margin-left: {% if item.text_margin_left %}{{ item.text_margin_left }}{% else %}0{% endif %};">
                                         <div>{{ item.name }}</div>
