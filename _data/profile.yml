@@ -35,7 +35,7 @@ education:
 - name: UC Berkeley
   logo: /assets/images/badges/uc_berkeley.svg
   logo_size: 150px
-  logo_margin_top: 8px
+  logo_margin_top: 30px
   position: Ph.D. Student in Computer Science
   date: Sep. 2026 - Present
 - name: Peking University
